@@ -1,0 +1,5 @@
+development:
+  adapter: postgresql
+  database: url_shortener_dev
+  host: localhost
+  username: appacademy

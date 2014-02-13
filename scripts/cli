@@ -1,0 +1,33 @@
+require 'rails'
+require 'user'
+
+puts "Input your email: "
+email = gets.chomp
+
+#attempt to get user
+user = User.find_by_email(email)
+
+if user
+  puts "Welcome back!"
+else user
+  #signing up user
+  User.create!(:email => email)
+  puts "We've signed you up!"
+end
+
+puts "What do you want to do?"
+puts "0. Create shortened URL"
+puts "1. Visit shortened URL"
+response = Integer(gets.chomp)
+
+if response == 0
+  puts "Type in your long url"
+  long_url = gets.chomp
+  short_url = ShortenedURL.create_for_user_and_long_url!(user, long_url)
+  puts "Short url is: #{short_url.short_url}"
+else
+  puts "Type in the shortened URL"
+  input = gets.chomp
+  short_url = ShortenedURL.find_by_short_url(input)
+  Visit.record_visit!(user, short_url)
+end
