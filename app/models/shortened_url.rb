@@ -19,6 +19,13 @@ class ShortenedURL < ActiveRecord::Base
 
   has_many :visitors, :through => :visits, :source => :visitor
 
+  has_many(
+  :taggings,
+  :class_name => "Tagging",
+  :foreign_key => :url_id,
+  :primary_key => :id
+  )
+
   def self.random_code
     while true
       new_short_url = SecureRandom.urlsafe_base64(16)
